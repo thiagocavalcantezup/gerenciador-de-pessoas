@@ -1,34 +1,32 @@
 package br.com.zup.edu.personmanager.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.time.LocalDate;
 
-@Entity
-public class Pessoa {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class PessoaResponse {
 
+    private Long id;
     private String nome;
     private String cpf;
     private String apelido;
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate dataNascimento;
 
-    public Pessoa(String nome, String cpf, String apelido, LocalDate dataNascimento) {
+    public PessoaResponse() {
+    }
+
+    private PessoaResponse(Long id, String nome, String cpf, String apelido, LocalDate dataNascimento) {
+        this.id = id;
         this.nome = nome;
         this.cpf = cpf;
         this.apelido = apelido;
         this.dataNascimento = dataNascimento;
     }
 
-    /**
-     * @deprecated
-     */
-    @Deprecated
-    public Pessoa() {
+    public static PessoaResponse from(Pessoa novaPessoa) {
+        return new PessoaResponse(novaPessoa.getId(), novaPessoa.getNome(),
+                novaPessoa.getCpf(), novaPessoa.getApelido(), novaPessoa.getDataNascimento() );
     }
 
     public Long getId() {
