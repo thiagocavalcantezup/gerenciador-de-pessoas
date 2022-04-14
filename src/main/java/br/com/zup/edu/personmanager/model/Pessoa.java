@@ -1,6 +1,7 @@
 package br.com.zup.edu.personmanager.model;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -49,6 +50,10 @@ public class Pessoa {
 
     public Long getId() {
         return id;
+    }
+
+    public Long idade() {
+        return ChronoUnit.YEARS.between(dataNascimento, LocalDate.now());
     }
 
 }
